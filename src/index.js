@@ -68,7 +68,6 @@ class Welcome extends React.Component{
 //
   }
     addRecord(){
-   let mas=JSON.parse(localStorage.getItem("masv"))||[]
    this.state.mas.push(document.getElementById("outlined-full-width").value)
    this.setState({mas:(()=>{
     let items=[]
