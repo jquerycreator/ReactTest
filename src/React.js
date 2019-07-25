@@ -39,11 +39,11 @@ class Welcome extends React.Component{
      	items[count]=<div key={count.toString()} style={{display:"flex",position:"relative"}} count={count}>
           	<Checkbox/>
           	<TextField  onChange={this.update.bind(this)}  test={JSON.stringify(mas[count])}  defaultValue={""+mas[count]+""} style={{flexGrow:2,alignSelf:"center"}}/>
-          	<button onClick={this.DelText.bind(this)} style={{background:"white",border:"none",transform:"scale(0.7)",cursor:"pointer"}}>
+          	<div onClick={this.DelText.bind(this)} style={{background:"white",border:"none",transform:"scale(0.7)",cursor:"pointer"}}>
           	 <Fab  disabled aria-label="Delete" style={{background:"white",color:"black",}}>
                 <DeleteIcon />
               </Fab>
-             </button>
+             </div>
           </div>
           alert(items)
       return items

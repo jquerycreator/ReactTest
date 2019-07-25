@@ -19,8 +19,10 @@ class Welcome extends React.Component{
     }
     DelText (e){ 
       const index = [...e.target.parentElement.parentElement.children].indexOf(e.target.parentElement)
-      this.state.mas.splice(index,1)
-      this.setState({mas:this.state.mas})
+      let mas=JSON.parse(localStorage.getItem("masv"))
+      mas.splice(index,1)
+      localStorage.setItem("masv",JSON.stringify(mas))
+      e.target.parentElement.remove()
     }
     update(e){
       let test=e.target.parentElement.parentElement.getAttribute("test")
@@ -28,35 +30,40 @@ class Welcome extends React.Component{
       let mastok=test.split('')
          mastok.splice(0,1)
          mastok.splice(mastok.length-1,1)
-      //let mas=JSON.parse(localStorage.getItem("masv"))
-      this.state.mas[this.state.mas.indexOf(mastok.join(''))]=val
+      let mas=JSON.parse(localStorage.getItem("masv"))
+      mas[mas.indexOf(mastok.join(''))]=val
    this.setState({mas:(()=>{
     let items=[]
-     for (let count=0;count<this.state.mas.length;count++)
+     for (let count=0;count<mas.length;count++)
       items[count]=<div key={count.toString()} style={{display:"flex",position:"relative"}} count={count}>
             <Checkbox/>
-            <TextField  onChange={this.update.bind(this)}  test={JSON.stringify(this.state.mas[count])}  defaultValue={""+this.state.mas[count]+""} style={{flexGrow:2,alignSelf:"center"}}/>
+            <TextField  onChange={this.update.bind(this)}  test={JSON.stringify(mas[count])}  defaultValue={""+mas[count]+""} style={{flexGrow:2,alignSelf:"center"}}/>
             <div onClick={this.DelText.bind(this)} style={{background:"white",border:"none",transform:"scale(0.7)",cursor:"pointer"}}>
              <Fab  disabled aria-label="Delete" style={{background:"white",color:"black",}}>
                 <DeleteIcon />
               </Fab>
              </div>
           </div>
-          alert(items)
       return items
 
     })()})
 
-    //  localStorage.setItem("masv",JSON.stringify(mas))
+      localStorage.setItem("masv",JSON.stringify(mas))
 
     }
   componentDidMount() {
+     if(!localStorage.getItem("masv")){
+      localStorage.clear()
+      localStorage.setItem("masv","[]")
+      return;
+    }
+   let mas=JSON.parse(localStorage.getItem("masv"))
    this.setState({mas:(()=>{
     let items=[]
-     for (let count=0;count<this.state.mas.length;count++)
+     for (let count=0;count<mas.length;count++)
       items[count]=<div  key={count.toString()} style={{display:"flex",position:"relative",alignItems:"center"}} count={count}>
             <Checkbox style={{marginRight:"10px"}}/>
-            <TextField  onChange={this.update.bind(this)}  test={JSON.stringify(this.state.mas[count])}  defaultValue={""+this.state.mas[count]+""} style={{flexGrow:2}}/>
+            <TextField  onChange={this.update.bind(this)}  test={JSON.stringify(mas[count])}  defaultValue={""+mas[count]+""} style={{flexGrow:2}}/>
             <div onClick={this.DelText.bind(this)} style={{background:"white",border:"none",transform:"scale(0.7)",cursor:"pointer"}}>
              <Fab  disabled aria-label="Delete" style={{background:"white",color:"black",}}>
                 <DeleteIcon />
@@ -68,13 +75,16 @@ class Welcome extends React.Component{
 //
   }
     addRecord(){
-   this.state.mas.push(document.getElementById("outlined-full-width").value)
+      let mas=JSON.parse(localStorage.getItem("masv"))
+     // localStorage.clear()
+      mas.push(document.getElementById("outlined-full-width").value)
+      localStorage.setItem("masv",JSON.stringify(mas))
    this.setState({mas:(()=>{
     let items=[]
-     for (let count=0;count<this.state.mas.length;count++){
+     for (let count=0;count<mas.length;count++){
       items[count]=<div  key={count.toString()} style={{display:"flex",position:"relative",alignItems:"center"}} count={count}>
             <Checkbox style={{marginRight:"10px"}}/>
-            <TextField  onChange={this.update.bind(this)}  test={JSON.stringify(this.state.mas[count])}  defaultValue={""+this.state.mas[count]+""} style={{flexGrow:2}}/>
+            <TextField  onChange={this.update.bind(this)}  test={JSON.stringify(mas[count])}  defaultValue={""+mas[count]+""} style={{flexGrow:2}}/>
             <div onClick={this.DelText.bind(this)} style={{background:"white",border:"none",transform:"scale(0.7)",cursor:"pointer"}}>
              <Fab  disabled aria-label="Delete" style={{background:"white",color:"black",}}>
                 <DeleteIcon />
